@@ -14,11 +14,12 @@ public class Birthday {
             int syntymapaivaVuosi = Integer.parseInt(syntymapaivaArray[0]);
             LocalDate syntymapaivaDate = LocalDate.of(syntymapaivaVuosi, syntymapaivaKuukausi, syntymapaivaPaiva);
             LocalDate tanaan = LocalDate.now();
+
             long erotus = ChronoUnit.DAYS.between(syntymapaivaDate, tanaan);
         if(syntymapaivaDate.isAfter(tanaan)){
             System.out.println("Syntymäpäivä ei voi olla tulevaisuudessa.");
         } 
-        if(syntymapaivaDate.isEqual(tanaan)){
+        if(syntymapaivaDate.getMonthValue() == tanaan.getMonthValue() && syntymapaivaDate.getDayOfMonth() == tanaan.getDayOfMonth()){
             System.out.println("Hyvää syntymäpäivää!");
         }
         if(erotus % 1000 == 0){
