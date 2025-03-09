@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class EventFilter {
-    // Filters based on category, description, or month-day
     private MonthDay monthDay;
     private String description;
     private Category category;
@@ -73,30 +72,30 @@ public abstract class EventFilter {
         }
     }
 
-    // Filter by category
+
     public static class CategoryFilter extends EventFilter {
         private Category criteriaCategory;
     
         public CategoryFilter(Category criteriaCategory) {
-            super(null, "", criteriaCategory);  // This might not be needed depending on your implementation of EventFilter
+            super(null, "", criteriaCategory);  
             this.criteriaCategory = criteriaCategory;
         }
     
         @Override
         public boolean accepts(Event event) {
-            // Get the event's category
+            
             Category eventCategory = event.getCategory();
             
-            // Compare the primary and secondary categories
+        
             boolean isPrimaryMatch = eventCategory.getPrimary().equals(criteriaCategory.getPrimary());
             boolean isSecondaryMatch = (eventCategory.getSecondary() != null && eventCategory.getSecondary().equals(criteriaCategory.getSecondary()));
             
-            return isPrimaryMatch || isSecondaryMatch;  // Return true if either primary or secondary category matches
+            return isPrimaryMatch || isSecondaryMatch;  
         }
     }
     
 
-    // Filter by both date and category
+    
     public static class DateCategoryFilter extends EventFilter {
         private MonthDay criteriaDate;
         private Category criteriaCategory;
@@ -109,14 +108,11 @@ public abstract class EventFilter {
     
         @Override
         public boolean accepts(Event event) {
-            // Check if the event's date matches the criteria date
             boolean isDateMatch = event.getMonthDay().equals(criteriaDate);
     
-            // Compare primary and secondary categories
             boolean isPrimaryMatch = event.getCategory().getPrimary().equals(criteriaCategory.getPrimary());
             boolean isSecondaryMatch = (event.getCategory().getSecondary() != null && event.getCategory().getSecondary().equals(criteriaCategory.getSecondary()));
             
-            // Return true if both date and category (primary or secondary) match
             return isDateMatch && (isPrimaryMatch || isSecondaryMatch);
         }
     }
